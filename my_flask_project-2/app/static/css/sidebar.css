@@ -1,0 +1,53 @@
+/* sidebar.css */
+
+/* 사이드바 전체 스타일 */
+.sidebar {
+    background-color: #fee3d8;
+    width: 60px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 사이드바 버튼 스타일 */
+.sidebar-btn {
+    background: #ffefe5;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #25466d;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar-btn:hover {
+    background: #ddbcae;
+    transform: scale(1.1);
+}
+
+.sidebar-btn.active {
+    background: #f6c2ac;
+    color: white;
+}
+
+.sidebar-btn i {
+    font-size: 18px;
+}
+
+/* 컨텐츠가 사이드바와 겹치지 않도록 */
+.dashboard-container {
+    margin-left: 80px; /* 사이드바 너비 + 여유 공간 */
+    width: calc(100% - 80px);
+}

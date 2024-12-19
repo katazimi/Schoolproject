@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nystagmus Diagnosis</title>
+    <!-- FontAwesome 사용: 아이콘을 위한 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- 외부 스타일시트 연결 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+
+        <!-- 사이드바 영역 -->
+        <div class="sidebar">
+            <button class="sidebar-btn" title="프로필 바로 가기" onclick="navigateTo('/profile')">
+                <i class="fas fa-user"></i>
+            </button>
+            <button class="sidebar-btn active" title="Home" onclick="navigateTo('/')">
+                <i class="fas fa-play-circle"></i>
+            </button>
+            <button class="sidebar-btn" title="결과창" onclick="navigateTo('/results')">
+                <i class="fas fa-chart-bar"></i>
+            </button>
+        </div>
+
+        <script>
+            function navigateTo(url) {
+                window.location.href = url;
+            }
+        </script>
+
+
+        <!-- 헤더 영역 -->
+        <div class="header">
+            <div class="header-left">
+                <h1>Home</h1>
+            </div>
+            <div class="header-right">
+                <span>재생 중인 파일: <span id="current-video">선택되지 않음</span></span>
+            </div>
+        </div>
+        
+        <!-- 메인 콘텐츠 영역 -->
+        <div class="content">
+            <!-- 비디오 플레이어 영역 -->
+            <div class="video-main">
+                <div class="large-video">
+                    <video id="video-player">
+                        <!-- 자막 추가를 위한 track 요소 (자바스크립트로 업데이트) -->
+                    </video>
+                    <!-- 사용자 정의 비디오 컨트롤 영역 -->
+                    <div class="video-controls">
+                        <button class="control-btn play"><i class="fas fa-play"></i></button>
+                        <button class="control-btn pause" style="display:none;"><i class="fas fa-pause"></i></button>
+                        <button class="control-btn stop"><i class="fas fa-stop"></i></button>
+                        <input type="range" class="progress-bar" min="0" max="100" value="0">
+                        <span class="time-display">0:00 / 0:00</span>
+                        <button class="control-btn volume"><i class="fas fa-volume-up"></i></button>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1" style="display: none;">
+                        <span class="volume-value" style="display: none;">100</span> <!-- 볼륨 값을 표시할 영역 -->
+                        <!-- 설정 메뉴 (비디오 플레이어 설정) -->
+                        <div class="settings-menu" style="display: none;">
+                            <label>
+                                재생 속도
+                                <select id="playback-rate">
+                                    <option value="0.5">0.5x</option>
+                                    <option value="0.75">0.75x</option>
+                                    <option value="1" selected>1x</option>
+                                    <option value="1.25">1.25x</option>
+                                    <option value="1.5">1.5x</option>
+                                    <option value="2">2x</option>
+                                </select>
+                            </label>
+                            <label>
+                                컨트롤 고정
+                                <input type="checkbox" id="control-toggle"> 
+                            </label>
+                            <label>
+                                자동 재생
+                                <input type="checkbox" id="autoplay"> 
+                            </label>
+                            <label>
+                                루프 재생
+                                <input type="checkbox" id="loop"> 
+                            </label>
+                            <button id="fullscreen-button">전체 화면</button>
+                        </div>
+                        <button class="control-btn settings"><i class="fas fa-cog"></i></button>
+                    </div>                                 
+                </div>
+            </div>
+
+            <!-- 파일 추가 및 재생 목록 영역 -->
+            <div class="file-section">
+                <div class="file-controls">
+                    <!-- 파일 선택을 숨기고 버튼 클릭 시 트리거 -->
+                    <input type="file" id="file-input" accept="video/*" multiple hidden>
+                    <button class="file-btn" onclick="document.getElementById('file-input').click()">파일 추가</button>
+                    <button class="file-btn" onclick="clearPlaylist()">재생 목록 초기화</button>
+                </div>
+                <!-- 재생 목록을 표시하는 영역 -->
+                <div class="playlist">
+                    <h3 class="playlist-title">재생 목록</h3>
+                    <div class="playlist-items">
+                        <!-- 추가된 동영상 아이템들이 여기에 표시됨 -->
+                    </div>
+                </div>
+                <!-- 이석증 판별하기 영역 -->
+                <div class="analysis-section">
+                    <button id="start-analysis-button" class="analysis-button">이석증 판별하기</button>
+                    <div class="progress-bar-container" style="display: none;">
+                        <progress id="progress-bar" value="0" max="100"></progress>
+                        <span id="progress-text">0%</span>
+                    </div>
+                </div>                           
+            </div>
+        </div>
+    </div>
+    <!-- 사용자 ID를 숨겨서 저장 -->
+    <div id="user-info" style="display: none;">{{ user.id if user else 'null' }}</div>
+    <div id="loggedInStatus-info" style="display: none;">{{ loggedInStatus }}</div>
+
+    <!-- 알림 메시지 모달 -->
+    <div class="alert-modal" style="display: none;">
+        <div class="alert-content">
+            <p id="alert-message">알림 메시지 내용</p>
+            <button class="alert-btn">확인</button>
+        </div>
+    </div>
+    <!-- 외부 JavaScript 파일 연결 -->
+    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+</body>
+</html>

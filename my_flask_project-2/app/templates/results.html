@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>안전 영상 재생</title>
+    <!-- FontAwesome 사용: 아이콘을 위한 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- 외부 스타일시트 연결 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/results.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+</head>
+<body>
+    <div class="container">
+
+        <!-- 사이드바 영역 -->
+        <div class="sidebar">
+            <button class="sidebar-btn" title="프로필 바로 가기" onclick="navigateTo('/profile')">
+                <i class="fas fa-user"></i>
+            </button>
+            <button class="sidebar-btn" title="안진 영상 재생" onclick="navigateTo('/')">
+                <i class="fas fa-play-circle"></i>
+            </button>
+            <button class="sidebar-btn active" title="결과창" onclick="navigateTo('/results')">
+                <i class="fas fa-chart-bar"></i>
+            </button>
+        </div>
+
+        <script>
+            function navigateTo(url) {
+                window.location.href = url;
+            }
+        </script>
+
+        <!-- 헤더 영역 -->
+        <div class="header">
+            <h1>안전 영상 재생</h1>
+        </div>
+
+        <!-- 탭 메뉴 -->
+        <div class="file-tabs">
+            <button class="file-tab active" onclick="showTab('tab1')">동공 좌표 </button>
+            <button class="file-tab" onclick="showTab('tab2')">동공 좌표 산점도</button>
+            <button class="file-tab" onclick="showTab('tab3')">동공 좌표 그래프</button>
+        </div>
+        
+
+        <!-- 메인 콘텐츠 영역 -->
+        <div class="main-content">
+            <div class="content">
+                <!-- 탭 콘텐츠들 -->
+                <div id="tab1" class="tab-content active">
+                    <div class="video-players">
+                        <div class="video-player left">
+                            <p>왼쪽 눈 동공 좌표 </p>
+                            <video id="tab1-left-video" autoplay loop muted width="100%">
+                                브라우저가 영상을 지원하지 않습니다.
+                            </video>
+                        </div>
+                        <div class="video-player right">
+                            <p>오른쪽 눈 동공 좌표</p>
+                            <video id="tab1-right-video" autoplay loop muted width="100%">
+                                브라우저가 영상을 지원하지 않습니다.
+                            </video>
+                        </div>
+                    </div>                    
+                </div>
+                <div id="tab2" class="tab-content active">
+                    <div class="video-players">
+                        <div class="video-player left">
+                            <p>왼쪽 눈 동공 좌표 산점도 </p>
+                            <video id="tab2-left-video" autoplay loop muted width="100%">
+                                브라우저가 영상을 지원하지 않습니다.
+                            </video>
+                        </div>
+                        <div class="video-player right">
+                            <p>오른쪽 눈 동공 좌표 산점도</p>
+                            <video id="tab2-right-video" autoplay loop muted width="100%">
+                                브라우저가 영상을 지원하지 않습니다.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab3" class="tab-content active">
+                    <div class="video-players">
+                        <div class="video-player left">
+                            <p>왼쪽 눈 x축</p>
+                            <video id="tab3-left1-video" autoplay loop muted width="100%">
+                                브라우저가 영상을 지원하지 않습니다.
+                            </video>
+                        </div>
+                        <div class="video-player right">
+                            <p>오른쪽 눈 x축</p>
+                            <video id="tab3-right1-video" autoplay loop muted width="100%">
+                                브라우저가 영상을 지원하지 않습니다.
+                            </video>
+                        </div>
+                        <div class="video-player right">
+                            <p>오른쪽 눈 y축</p>
+                            <video id="tab3-right2-video" autoplay loop muted width="100%">
+                                브라우저가 영상을 지원하지 않습니다.
+                            </video>
+                        </div>
+                        <div class="video-player right">
+                            <p>왼쪽 눈 y축</p>
+                            <video id="tab3-left2-video" autoplay loop muted width="100%">
+                                브라우저가 영상을 지원하지 않습니다.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab5" class="tab-content">
+                    
+                </div>
+            </div>
+
+            <!-- 재생 목록 -->
+            <aside class="playlist">
+                <h3 class="playlist-title">재생 목록</h3>
+                <div id="playlist" class="playlist-items">
+                    <!-- 추가된 동영상 아이템들이 여기에 표시됨 -->
+                </div>
+                <div class="hc-bppv-layer">
+                    수평반고리관 [HC-BPPV]
+                </div>
+            </aside>
+        </div>
+    </div>
+    <!-- 알림 메시지 모달 -->
+    <div class="alert-modal" style="display: none;">
+        <div class="alert-content">
+            <p id="alert-message">알림 메시지 내용</p>
+            <button class="alert-btn">확인</button>
+        </div>
+    </div>
+    
+    <!-- 사용자 ID를 숨겨서 저장 -->
+    <div id="user-info" style="display: none;">{{ user.id if user else 'null' }}</div>
+    <div id="loggedInStatus-info" style="display: none;">{{ loggedInStatus }}</div>
+
+    <!-- 외부 JavaScript 파일 연결 -->
+    <script src="{{ url_for('static', filename='js/results.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+</body>
+</html>
+    

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로필 관리</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- 사이드바 영역 -->
+        <div class="sidebar">
+            <button class="sidebar-btn active" title="프로필 바로 가기" onclick="navigateTo('/profile')">
+                <i class="fas fa-user"></i>
+            </button>
+            <button class="sidebar-btn" title="안진 영상 재생" onclick="navigateTo('/')">
+                <i class="fas fa-play-circle"></i>
+            </button>
+            <button class="sidebar-btn" title="결과창" onclick="navigateTo('/results')">
+                <i class="fas fa-chart-bar"></i>
+            </button>
+        </div>
+
+        <script>
+            function navigateTo(url) {
+                window.location.href = url;
+            }
+
+            function togglePasswordChange() {
+                const passwordForm = document.getElementById('password-form-container');
+                const isHidden = passwordForm.style.display === 'none';
+                passwordForm.style.display = isHidden ? 'block' : 'none';
+            }
+        </script>
+
+
+        <!-- 헤더 영역 -->
+        <div class="header">
+            <div class="header-left">
+                <h1>프로필 관리</h1>
+            </div>
+        </div>
+        
+        <!-- 메인 콘텐츠 영역 -->
+        <div class="content">
+            <div class="profile-card">
+                <div class="profile-header">
+                    <h2>{{ user.username }}</h2>
+                    <h3>{{ user.email }}</h3>
+                    <button class="btn edit-profile" onclick="togglePasswordChange()">비밀번호 변경하기</button>
+                </div>
+                <div id="password-form-container" style="display: none;">
+                    <div class="profile-details">
+                        <form method="POST">
+                            <div class="form-group">
+                                <label for="current_password">현재 비밀번호:</label>
+                                <input type="password" id="current_password" name="current_password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="new_password">새 비밀번호:</label>
+                                <input type="password" id="new_password" name="new_password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm_password">비밀번호 확인 :</label>
+                                <input type="password" id="confirm_password" name="confirm_password" required>
+                            </div>
+                            <button type="submit" class="btn">비밀번호 변경</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <button class="btn logout" id="logout-button">Logout</button>
+        </div>
+        <div id="loggedInStatus-info" style="display: none;">{{ loggedInStatus }}</div>
+    </div>
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+</body>
+</html>

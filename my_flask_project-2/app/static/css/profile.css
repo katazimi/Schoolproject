@@ -1,0 +1,131 @@
+/* profile.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fefbf2;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.dashboard-container {
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0px 4px 20px rgba(10, 40, 76, 0.1);
+    overflow: hidden;
+}
+
+.header {
+    background-color: #617ea2;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    font-size: 1.4em;
+    border-radius: 15px 15px 0 0;
+}
+
+.content {
+    padding: 20px;
+    background: #fbf7e7;
+    border-radius: 0 0 15px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-card {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.profile-header {
+    margin-bottom: 15px;
+}
+
+.profile-header h2 {
+    font-size: 24px;
+    color: #141414;
+    margin: 5px 0;
+}
+
+.profile-header h3 {
+    color: #363b3d;
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.btn {
+    background-color: #f6c2ac;
+    color: #3d3d3d;
+    font-size: 16px;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    box-shadow: 0px 4px 8px rgba(10, 40, 76, 0.1);
+    margin-top: 10px;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #ffdfd2;
+    color: black;
+    transform: translateY(-2px);
+}
+
+.btn.logout {
+    background-color: #9fb8d7;
+}
+
+.btn.logout:hover {
+    background-color: #abc8eb;
+}
+
+.profile-details {
+    background-color: #fbf7e7;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 40px); /* 양쪽 20px 여백을 추가 */
+    margin: 0 auto; /* 중앙 정렬 */
+}
+
+.profile-details h3 {
+    font-size: 1em;
+    margin-bottom: 15px;
+    color: #444;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.85em;
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 0.85em;
+}

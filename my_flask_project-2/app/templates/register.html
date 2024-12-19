@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="register-container">
+        <h2>회원가입</h2>
+        <form method="POST" class="register-form">
+            <div class="form-group">
+                <label for="username">사용자 이름</label>
+                <input type="text" id="username" name="username" required placeholder="사용자 이름을 입력하세요">
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" required placeholder="이메일을 입력하세요">
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" name="password" required placeholder="비밀번호를 입력하세요">
+            </div>
+            <button type="submit" class="register-button">회원가입</button>
+        </form>
+        <p class="login-link">
+            이미 계정이 있으신가요? <a href="{{ url_for('main.login') }}">로그인</a>
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,414 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fefbf2; /* 밝은 아이보리 그린 배경색 */
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden; /* 화면 넘침 방지 */
+}
+
+.dashboard-container {
+    background-color: #FFFFFF;
+    border-radius: 20px; /* 둥근 모서리 */
+    width: 90%;
+    height: 90vh;
+    box-shadow: 0px 4px 20px rgba(10, 40, 76, 0.1); /* 그림자 효과 */
+    display: flex;
+    flex-direction: column;
+    margin-left: 60px; /* 사이드바 너비를 고려한 왼쪽 여백 */
+    margin-right: 20px; /* 원하는 만큼의 오른쪽 여백 추가 */
+    width: calc(100% - 80px); /* 전체 너비에서 사이드바 및 오른쪽 여백 제외 */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #617ea2; /* 부드러운 그린 헤더 */
+    padding: 15px;
+    color: white;
+    border-radius: 20px 20px 0 0; /* 상단 모서리만 둥글게 */
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 버튼과 텍스트 사이의 간격 */
+}
+
+
+.content {
+    display: flex;
+    flex: 1;
+    overflow: hidden; /* 스크롤 방지 */
+}
+
+.video-main {
+    flex: 2.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.large-video {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #fbf7e7; /* 부드러운 그린 비디오 배경 */
+    border-radius: 20px;
+    overflow: hidden; /* 자식 요소 넘침 방지 */
+}
+
+.large-video video {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+.video-controls {
+    position: absolute;
+    bottom: 20px; /* 하단에서 20px 위 */
+    left: 50%; /* 가로 중앙 정렬 */
+    transform: translateX(-50%); /* 가운데 정렬 */
+    display: flex;
+    gap: 10px;
+    background: rgba(143, 143, 143, 0.5); /* 반투명 배경 */
+    padding: 10px 15px;
+    border-radius: 30px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    align-items: center;
+    opacity: 0; /* 초기에는 보이지 않음 */
+    transition: opacity 0.3s ease; /* 부드러운 페이드 인/아웃 */
+}
+
+.control-btn {
+    background: #ffffff; /* 버튼 배경 */
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.control-btn:hover {
+    background: #abc8eb; /* 버튼 호버 시 밝은 그린 */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.control-btn.active {
+    background: #9fb8d7; /* 선택된 버튼 색상 */
+    color: white;
+}
+
+.file-section {
+    flex: 1;
+    background: #fbf7e7; /* 밝은 배경색 */
+    border-left: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 0 20px 20px 0;
+}
+
+.file-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.file-btn {
+    background: #f6c2ac; /* 버튼 색상 */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+}
+
+.file-btn:hover {
+    background-color: #ffdfd2; /* 호버 시 색상 */
+}
+
+.volume-slider-container {
+    display: flex;
+    align-items: center; /* 슬라이더와 볼륨 값을 수직 중앙 정렬 */
+    gap: 10px; /* 슬라이더와 볼륨 값 사이 간격 */
+}
+
+.volume-slider {
+    width: 150px;
+    height: 6px;
+    background: #ddd; /* 트랙 기본 배경 */
+    appearance: none;
+    display: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+.volume-slider.show {
+    display: block;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #f2f8e8; /* 슬라이더 핸들 색상 */
+    cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-runnable-track {
+    background: #7496c1; /* 슬라이더 트랙 색상 */
+    height: 6px;
+    border-radius: 5px;
+}
+
+.volume-value {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #fff;
+    /* background-color: #8ecf77; /* 볼륨 값 배경 */
+    padding: 2px 8px;
+    border-radius: 5px;
+    display: none; /* 기본 상태에서 숨김 */
+}
+
+.progress-bar {
+    width: 150px;
+    height: 6px;
+    background: #ddd; /* 트랙 기본 배경 */
+    appearance: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+.progress-bar.show {
+    display: block;
+}
+
+.progress-bar::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #f2f8e8; /* 슬라이더 핸들 색상 */
+    cursor: pointer;
+}
+
+.progress-bar::-webkit-slider-runnable-track {
+    background: #5078aa; /* 슬라이더 트랙 색상 */
+    height: 6px;
+    border-radius: 5px;
+}
+
+.time-display {
+    font-size: 12px;
+    color: #fff;
+}
+
+.large-video video {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+.settings-menu {
+    background-color: #FFFFFF;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    bottom: 60px; /* 설정 버튼 바로 위로 위치 */
+    right: 0; /* 설정 버튼 기준으로 오른쪽에 맞춤 */
+    z-index: 100;
+    display: none; /* 기본적으로 숨김 */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px); /* 애니메이션 시작 위치를 약간 아래로 */
+}
+
+.settings-menu.show {
+    display: block; /* 보이기 위해 클래스 추가 시 표시 */
+    opacity: 1;
+    transform: translateY(0); /* 애니메이션이 끝날 때 제자리로 */
+}
+
+.settings-menu label {
+    display: flex;
+    justify-content: space-between; /* 왼쪽에 텍스트, 오른쪽에 체크박스 정렬 */
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: bold; /* 글씨 두껍게 */
+    color: #333; /* 텍스트 색상 */
+    background-color: #fffcf1; /* 메뉴 항목의 배경색을 밝게 설정 */
+    padding: 8px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(10, 40, 76, 0.1); /* 바깥쪽 그림자 */
+}
+
+.settings-menu select, 
+.settings-menu input[type="checkbox"] {
+    margin-left: 10px;
+    accent-color: #0b4386; /* 체크박스 선택 색상 */
+    cursor: pointer;
+}
+
+.settings-menu button {
+    background-color: #457ab8; /* 설정 버튼 색상 */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    box-shadow: 0px 2px 4px rgba(10, 40, 76, 0.1);
+    transition: background 0.2s ease;
+}
+
+.playlist {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0px 4px 10px rgba(10, 40, 76, 0.1);
+    margin-top: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.playlist-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.playlist-item {
+    background: #f7f7f7;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.playlist-item:hover {
+    background-color: #e6e9f2;
+}
+
+.video-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.video-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.video-duration {
+    font-size: 12px;
+    color: #999;
+}
+
+.play-button {
+    background-color: #f6c2ac; /* 메인 색상 */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    box-shadow: 0px 2px 4px rgba(10, 40, 76, 0.1);
+}
+
+.play-button:hover {
+    background-color: #ffdfd2; /* 버튼 호버 시 색상 */
+    color: #141414;
+}
+
+.analysis-section {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.analysis-button {
+    background-color: #f6c2ac; /* 버튼 색상 */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s ease;
+    box-shadow: 0px 2px 4px rgba(10, 40, 76, 0.1);
+}
+
+.analysis-button:hover {
+    background-color: #ffdfd2; /* 호버 시 색상 */
+}
+
+/* 비활성화된 상태 스타일 */
+.analysis-button.disabled {
+    background-color: #ccc; /* 회색 */
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.progress-bar-container {
+    margin-top: 15px;
+}
+
+progress {
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #ddd;
+    border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+    background-color: #7496c1;
+    border-radius: 10px;
+}
+
+#progress-text {
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.delete-button {
+    background-color: #f68759; /* 빨간색 */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #fc976c; /* 더 진한 빨간색 */
+}
